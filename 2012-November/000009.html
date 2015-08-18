@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Nagelfar-users] Nagelfar-users Digest, Vol 6, Issue 1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/nagelfar-users/2012-November/index.html" >
+   <LINK REL="made" HREF="mailto:nagelfar-users%40lists.berlios.de?Subject=Re%3A%20%5BNagelfar-users%5D%20Nagelfar-users%20Digest%2C%20Vol%206%2C%20Issue%201&In-Reply-To=%3CCAPWHZ_WL4ZDBpy774tvXHRTYm8HWhV5P5UcY0sfMqiqq_Q4yoQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Nagelfar-users] Nagelfar-users Digest, Vol 6, Issue 1</H1>
+    <B>Peter Spjuth</B> 
+    <A HREF="mailto:nagelfar-users%40lists.berlios.de?Subject=Re%3A%20%5BNagelfar-users%5D%20Nagelfar-users%20Digest%2C%20Vol%206%2C%20Issue%201&In-Reply-To=%3CCAPWHZ_WL4ZDBpy774tvXHRTYm8HWhV5P5UcY0sfMqiqq_Q4yoQ%40mail.gmail.com%3E"
+       TITLE="[Nagelfar-users] Nagelfar-users Digest, Vol 6, Issue 1">peter.spjuth at gmail.com
+       </A><BR>
+    <I>Fri Nov  2 12:43:37 CET 2012</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well, that code is very dynamic and thus tricky to check.
+There is no way to get rid of those warnings without explicit assignments
+or annotations. I would recommend adding
+set isValid 0
+set getDefaultValue &quot;&quot;
+as the simplest change, if you are allowed to change the code.
+
+I have though about some plugin support to Nagelfar to allow a user to
+handle special cases like this, but that is only at the faint idea level yet.
+
+I have not used cmdline but when I do stuff similar to that, I would name
+listargsParams something short like &quot;p&quot; and access is members using
+$p(isValid).
+
+/Peter
+
+On Wed, Oct 31, 2012 at 1:44 PM, Stephen Ehmann &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/nagelfar-users">sehmann at gmail.com</A>&gt; wrote:
+&gt;<i> Looking again at the code, I didn't write it...
+</I>&gt;<i>
+</I>&gt;<i> Here is a sample, it looks like there is no easy way to recognize this...
+</I>&gt;<i> proc foo {args} {
+</I>&gt;<i>     set listArgsOptions {
+</I>&gt;<i>         {isValid.arg &quot;&quot; &quot;&lt;specify combination to check in format -
+</I>&gt;<i> \&quot;\$category \$property \$value\&quot;&gt;&quot; &quot;NO_CUSTOMIZE&quot;}
+</I>&gt;<i>         {getDefaultValue.arg &quot;&quot; &quot;&lt;specify combination to check in format -
+</I>&gt;<i> \&quot;\$category \$property\&quot;&gt;&quot; &quot;NO_CUSTOMIZE&quot;}
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     array set listargsParams [::cmdline::getKnownOptions args
+</I>&gt;<i> $listArgsOptions]
+</I>&gt;<i>     foreach tempArrayName [array names listargsParams] {
+</I>&gt;<i>         set $tempArrayName $listargsParams($tempArrayName)
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     if {$isValid} {
+</I>&gt;<i>         return [bar $getDefaultValue]
+</I>&gt;<i>     } else {
+</I>&gt;<i>         return 0
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Date: Tue, 30 Oct 2012 17:32:19 +0100
+</I>&gt;&gt;<i> From: Peter Spjuth &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/nagelfar-users">peter.spjuth at gmail.com</A>&gt;
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/nagelfar-users">nagelfar-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Nagelfar-users] Unknown variable E for
+</I>&gt;&gt;<i>         cmdline::getKnownOptions
+</I>&gt;&gt;<i> Message-ID:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;CAPWHZ_WLoA8=_2zCbXsKJUEcyX+4_Qfe-PHfGNOdnVkSO_=<A HREF="https://lists.berlios.de/mailman/listinfo/nagelfar-users">zuA at mail.gmail.com</A>&gt;
+</I>&gt;&gt;<i> Content-Type: text/plain; charset=ISO-8859-1
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm not sure if I fully understand the situation.
+</I>&gt;&gt;<i> Can you give a code example that gives the warning?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I can see that you could get problems if you do not have a proper
+</I>&gt;&gt;<i> syntax definition for the command, like:
+</I>&gt;&gt;<i> ##nagelfar syntax cmdline::getKnownOptions l x x?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> But I wouldn't expect an unknown variable warning from that situation,
+</I>&gt;&gt;<i> so an example would be helpful.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /Peter
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Tue, Oct 30, 2012 at 3:40 PM, Stephen Ehmann &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/nagelfar-users">sehmann at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt; We use this extensively in our tcl code but get lots of unknown variable
+</I>&gt;&gt;<i> &gt; warnings we have to filter
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; ::cmdline::getKnownOptions arglistVar optlist ?usage?
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Has anyone figured out a good way to handle these without marking the
+</I>&gt;&gt;<i> &gt; code?
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Thanks,
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Stephen
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;<i> &gt; Nagelfar-users mailing list
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/nagelfar-users">Nagelfar-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/nagelfar-users">https://lists.berlios.de/mailman/listinfo/nagelfar-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Nagelfar-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/nagelfar-users">Nagelfar-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/nagelfar-users">https://lists.berlios.de/mailman/listinfo/nagelfar-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> End of Nagelfar-users Digest, Vol 6, Issue 1
+</I>&gt;&gt;<i> ********************************************
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Nagelfar-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/nagelfar-users">Nagelfar-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/nagelfar-users">https://lists.berlios.de/mailman/listinfo/nagelfar-users</A>
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/nagelfar-users">More information about the Nagelfar-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,106 @@
+From peter.spjuth at gmail.com  Fri Jan  4 22:39:22 2013
+From: peter.spjuth at gmail.com (Peter Spjuth)
+Date: Fri, 4 Jan 2013 22:39:22 +0100
+Subject: [Nagelfar-users] Nagelfar-users Digest, Vol 6, Issue 1
+In-Reply-To: <CAJuU-BxcN5L4gMyLAY=ftP-8jNWZNvnbjHrMN7cNERGEoNj73w@mail.gmail.com>
+References: <mailman.7.1351681203.12875.nagelfar-users@lists.berlios.de>
+	<CAJuU-BxcN5L4gMyLAY=ftP-8jNWZNvnbjHrMN7cNERGEoNj73w@mail.gmail.com>
+Message-ID: <CAPWHZ_XaWJRiMRSqTHHqk_XyYPHj5=4Ch=tws_ht93+v_GqAqA@mail.gmail.com>
+
+Hello,
+
+I have made some progress on Nagelfar plugins and kept this in mind
+when I did them. See more about them:
+http://git.berlios.de/cgi-bin/cgit.cgi/nagelfar/tree/doc/plugins.txt
+And your situation are tried in test 5.3 in:
+http://git.berlios.de/cgi-bin/cgit.cgi/nagelfar/tree/tests/plugin.test
+
+Does this look like something you could use?
+
+/Peter
+
+On Wed, Oct 31, 2012 at 1:44 PM, Stephen Ehmann <sehmann at gmail.com> wrote:
+> Looking again at the code, I didn't write it...
+>
+> Here is a sample, it looks like there is no easy way to recognize this...
+> proc foo {args} {
+>     set listArgsOptions {
+>         {isValid.arg "" "<specify combination to check in format -
+> \"\$category \$property \$value\">" "NO_CUSTOMIZE"}
+>         {getDefaultValue.arg "" "<specify combination to check in format -
+> \"\$category \$property\">" "NO_CUSTOMIZE"}
+>     }
+>
+>     array set listargsParams [::cmdline::getKnownOptions args
+> $listArgsOptions]
+>     foreach tempArrayName [array names listargsParams] {
+>         set $tempArrayName $listargsParams($tempArrayName)
+>     }
+>
+>     if {$isValid} {
+>         return [bar $getDefaultValue]
+>     } else {
+>         return 0
+>     }
+> }
+>
+>
+>> Date: Tue, 30 Oct 2012 17:32:19 +0100
+>> From: Peter Spjuth <peter.spjuth at gmail.com>
+>> To: nagelfar-users at lists.berlios.de
+>> Subject: Re: [Nagelfar-users] Unknown variable E for
+>>         cmdline::getKnownOptions
+>> Message-ID:
+>>
+>> <CAPWHZ_WLoA8=_2zCbXsKJUEcyX+4_Qfe-PHfGNOdnVkSO_=zuA at mail.gmail.com>
+>> Content-Type: text/plain; charset=ISO-8859-1
+>>
+>> I'm not sure if I fully understand the situation.
+>> Can you give a code example that gives the warning?
+>>
+>> I can see that you could get problems if you do not have a proper
+>> syntax definition for the command, like:
+>> ##nagelfar syntax cmdline::getKnownOptions l x x?
+>>
+>> But I wouldn't expect an unknown variable warning from that situation,
+>> so an example would be helpful.
+>>
+>> /Peter
+>>
+>> On Tue, Oct 30, 2012 at 3:40 PM, Stephen Ehmann <sehmann at gmail.com> wrote:
+>> > We use this extensively in our tcl code but get lots of unknown variable
+>> > warnings we have to filter
+>> >
+>> > ::cmdline::getKnownOptions arglistVar optlist ?usage?
+>> >
+>> > Has anyone figured out a good way to handle these without marking the
+>> > code?
+>> >
+>> > Thanks,
+>> >
+>> > Stephen
+>> >
+>> >
+>> > _______________________________________________
+>> > Nagelfar-users mailing list
+>> > Nagelfar-users at lists.berlios.de
+>> > https://lists.berlios.de/mailman/listinfo/nagelfar-users
+>>
+>>
+>> ------------------------------
+>>
+>> _______________________________________________
+>> Nagelfar-users mailing list
+>> Nagelfar-users at lists.berlios.de
+>> https://lists.berlios.de/mailman/listinfo/nagelfar-users
+>>
+>> End of Nagelfar-users Digest, Vol 6, Issue 1
+>> ********************************************
+>
+>
+>
+> _______________________________________________
+> Nagelfar-users mailing list
+> Nagelfar-users at lists.berlios.de
+> https://lists.berlios.de/mailman/listinfo/nagelfar-users
+
